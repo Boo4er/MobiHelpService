@@ -6,6 +6,7 @@ public class Desktop extends Device {
     private int dram;
     private int ram;
     private String os;
+    private static final String DEVICE_TYPE = "Настолный компьютер";
 
     public Desktop(String brand,
                    String model,
@@ -66,6 +67,6 @@ public class Desktop extends Device {
 
     @Override
     public String getDeviceType() {
-        return "Нвстольный компьютер";
+        return DEVICE_TYPE;
     }
 }

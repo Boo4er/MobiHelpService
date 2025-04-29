@@ -5,6 +5,7 @@ import java.lang.invoke.StringConcatFactory;
 public class Smartphone extends Device {
     private String imei;
     private String os;
+    private static final String DEVICE_TYPE = "Смартфон";
 
     public Smartphone(String brand,
                       String model,
@@ -36,6 +37,6 @@ public class Smartphone extends Device {
 
     @Override
     public String getDeviceType() {
-        return "Смартфон";
+        return DEVICE_TYPE;
     }
 }

@@ -2,6 +2,7 @@ package org.boo4er;
 
 public class Laptop extends Device {
     private String os;
+    private static final String DEVICE_TYPE = "Ноутбук";
 
     public Laptop(String brand,
                   String model,
@@ -23,6 +24,6 @@ public class Laptop extends Device {
 
     @Override
     public String getDeviceType() {
-        return "Ноутбук";
+        return DEVICE_TYPE;
     }
 }
