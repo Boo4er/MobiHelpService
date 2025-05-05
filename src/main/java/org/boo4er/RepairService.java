@@ -11,7 +11,6 @@ public class RepairService {
     private final List<Client> clients;
     private final List<Device> devicesInRepair;
 
-
     public RepairService() {
         this.clients = new ArrayList<>();
         this.devicesInRepair = new ArrayList<>();
@@ -22,26 +21,28 @@ public class RepairService {
     }
 
     boolean deleteClientByName(String clientName) {
+        boolean deleted = false;
         Iterator<Client> iterator = clients.iterator();
         while (iterator.hasNext()) {
             Client client = iterator.next();
             if (clientName.equals(client.getName())) {
                 iterator.remove();
-                return true;
+                deleted = true;
             }
         }
-        return false;
+        return deleted;
     }
 
     public Client findClientByName(String clientName) {
+        Client result = null;
         Iterator<Client> iterator = clients.iterator();
         while (iterator.hasNext()) {
             Client client = iterator.next();
             if (clientName.equals(client.getName())) {
-                return client;
+                result = client;
             }
         }
-        return null;
+        return result;
     }
 
     public List<Client> findAllClientsByBrand(String brand) {
