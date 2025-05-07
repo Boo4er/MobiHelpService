@@ -36,7 +36,7 @@ public class RepairServiceApp {
             System.out.print("Выберите действие: ");
 
             try {
-                int choice = scanner.nextInt();
+                int choice = Integer.parseInt(scanner.nextLine());
                 switch (choice) {
                     case 1:
                         аddClient(scanner, repairService);
@@ -79,7 +79,7 @@ public class RepairServiceApp {
                 }
             } catch (Exception e) {
                 System.out.println("Пожалуйста, введите цифру.");
-                scanner.next();
+                scanner.nextLine();
             }
 
         }
@@ -95,6 +95,7 @@ public class RepairServiceApp {
     }
 
     private static void getAllClientsList(Scanner scanner, RepairService repairService) {
+        System.out.println(repairService.getAllClientsList());
 
     }
 
@@ -126,6 +127,13 @@ public class RepairServiceApp {
     }
 
     private static void аddClient(Scanner scanner, RepairService repairService) {
-        System.out.println("addClient");
+        System.out.println("Введите имя клиента:");
+        String name = scanner.nextLine();
+        System.out.println("Введите телефон клиента:");
+        String phone = scanner.nextLine();
+        System.out.println("Введите email клиента (не обязателоно):");
+        String email = scanner.nextLine().trim();
+        repairService.addClient(new Client(name, phone, email.isEmpty() ? null : email));
+        System.out.println("Клиент добавлен");
     }
 }
