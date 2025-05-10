@@ -100,11 +100,15 @@ public class RepairServiceApp {
     }
 
     private static void deleteDeviceInRepair(Scanner scanner, RepairService repairService) {
-
+        System.out.print("Введите серийный номер: ");
+        String serial = scanner.nextLine();
+        repairService.deleteDeviceInRepair(serial);
     }
 
     private static void deleteClientByName(Scanner scanner, RepairService repairService) {
-
+        System.out.print("Введите имя клиента: ");
+        String name = scanner.nextLine();
+        repairService.deleteClientByName(name);
     }
 
     private static void addDeviceInRepair(Scanner scanner, RepairService repairService) {
@@ -112,7 +116,66 @@ public class RepairServiceApp {
     }
 
     private static void addDeviceToClient(Scanner scanner, RepairService repairService) {
+        System.out.println("Введите имя клиента");
+        String name = scanner.nextLine();
+        Client client = repairService.findClientByName(name);
+        if (client == null) {
+            System.out.println("Клиент не найден");
+            return;
+        }
+        System.out.println("Введите тип устройства");
+        System.out.println("1. ноутбук");
+        System.out.println("2. смартфон");
+        System.out.println("3. Настольный коспьютер");
+        System.out.print("Ваш выбор: ");
+        int type = Integer.parseInt(scanner.nextLine());
+        System.out.print("Введите бренд: ");
+        String brand = scanner.nextLine();
+        System.out.print("Введите модель: ");
+        String model = scanner.nextLine();
+        System.out.print("Введите серийный номер: ");
+        String serial = scanner.nextLine();
+        System.out.print("Опишите проблему: ");
+        String problem = scanner.nextLine();
 
+        try {
+            Device device;
+            switch (type) {
+                case 1:
+                    System.out.println("Введите О.С.: ");
+                    String os = scanner.nextLine();
+                    device = new Laptop(brand, model, serial, problem, os);
+                    break;
+                case 2: {
+                    System.out.println("Введите Imei :");
+                    String imei = scanner.nextLine();
+                    device = new Smartphone(brand, model, serial, problem, imei, "os");
+                    break;
+                }
+                case 3: {
+                    System.out.println("Введите ");
+                    String cpu = scanner.nextLine();
+                    device = new Desktop(
+                            brand,
+                            model,
+                            serial,
+                            problem,
+                            cpu,
+                            "AMD",
+                            2048,
+                            4084,
+                            "os"
+                    );
+                    break;
+                }
+                default:
+                    throw new IllegalArgumentException("Неверный тип устройства");
+
+            }
+
+        } catch (IllegalArgumentException e) {
+            System.out.println("Ошибка" + e.getMessage());
+        }
     }
 
     private static void editClientName(Scanner scanner, RepairService repairService) {
