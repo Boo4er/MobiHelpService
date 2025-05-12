@@ -1,5 +1,6 @@
 package org.boo4er;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class RepairServiceApp {
@@ -145,11 +146,13 @@ public class RepairServiceApp {
                     System.out.println("Введите О.С.: ");
                     String os = scanner.nextLine();
                     device = new Laptop(brand, model, serial, problem, os);
+                    repairService.addDeviceInRepair(device);
                     break;
                 case 2: {
                     System.out.println("Введите Imei :");
                     String imei = scanner.nextLine();
                     device = new Smartphone(brand, model, serial, problem, imei, "os");
+                    repairService.addDeviceInRepair(device);
                     break;
                 }
                 case 3: {
@@ -166,26 +169,53 @@ public class RepairServiceApp {
                             4084,
                             "os"
                     );
+                    repairService.addDeviceInRepair(device);
                     break;
                 }
                 default:
                     throw new IllegalArgumentException("Неверный тип устройства");
 
             }
-
+            if (repairService == null) {
+                throw new IllegalStateException("RepairService не инициализирован");
+            }
+            repairService.addDeviceInRepair(device);
+            System.out.println("Устройство успешно добавлено!");
         } catch (IllegalArgumentException e) {
             System.out.println("Ошибка" + e.getMessage());
         }
     }
 
     private static void editClientName(Scanner scanner, RepairService repairService) {
+        System.out.print("Введите имя клиента:");
+        String name = scanner.nextLine();
+        Client client = repairService.findClientByName(name);
 
+        if (client == null) {
+            System.out.println("Клиент не найден");
+            return;
+        }
+
+        System.out.print("Введите новое имя клиента:");
+        String newName = scanner.nextLine();
+        repairService.editClientName(name, newName);
     }
 
     private static void findAllClientsByBrand(Scanner scanner, RepairService repairService) {
+        System.out.print("Введите бренд устройства:");
+        String brand = scanner.nextLine();
+        List<Client> clients = repairService.findAllClientsByBrand(brand);
+        System.out.println(clients);
     }
 
     private static void findClientByName(Scanner scanner, RepairService repairService) {
+        System.out.print("Введите имя клиента:");
+        String name = scanner.nextLine();
+        Client client = repairService.findClientByName(name);
+        if (client == null) {
+            System.out.println("Клиент не найден");
+            return;
+        }
 
     }
 
