@@ -79,25 +79,44 @@ public class RepairServiceApp {
                         System.out.println("Неверное значение");
                 }
             } catch (Exception e) {
-                System.out.println("Пожалуйста, введите цифру.");
+                System.out.println(e.getMessage());
                 scanner.nextLine();
             }
-
         }
-
     }
 
     private static void getDevicesByType(Scanner scanner, RepairService repairService) {
-
+        System.out.println("Введите тип устройства");
+        System.out.println("1. Ноутбук");
+        System.out.println("2. Телефон");
+        System.out.println("3. Настольный компьютер");
+        System.out.print("Ваш выбор: ");
+        List<Device> result = null;
+        String deviceType = scanner.nextLine();
+        if (deviceType.equals("1")) {
+            result = repairService.getDevicesByType(Laptop.class);
+        } else if (deviceType.equals("2")) {
+            result = repairService.getDevicesByType(Smartphone.class);
+        } else if (deviceType.equals("3")) {
+            result = repairService.getDevicesByType(Desktop.class);
+        } else {
+            System.out.println("Введите цифру 1-3");
+        }
+        System.out.println(result);
     }
 
     private static void getAllDevicesInRepairList(Scanner scanner, RepairService repairService) {
-
+        System.out.println(repairService.getAllDevicesInRepairList());
+        if (repairService.getAllDevicesInRepairList() == null) {
+            System.out.println("Список пуст");
+        }
     }
 
     private static void getAllClientsList(Scanner scanner, RepairService repairService) {
         System.out.println(repairService.getAllClientsList());
-
+        if (repairService.getAllClientsList() == null) {
+            System.out.println("Список пуст");
+        }
     }
 
     private static void deleteDeviceInRepair(Scanner scanner, RepairService repairService) {
@@ -113,7 +132,7 @@ public class RepairServiceApp {
     }
 
     private static void addDeviceInRepair(Scanner scanner, RepairService repairService) {
-
+        // no-op
     }
 
     private static void addDeviceToClient(Scanner scanner, RepairService repairService) {
@@ -146,13 +165,11 @@ public class RepairServiceApp {
                     System.out.println("Введите О.С.: ");
                     String os = scanner.nextLine();
                     device = new Laptop(brand, model, serial, problem, os);
-                    repairService.addDeviceInRepair(device);
                     break;
                 case 2: {
                     System.out.println("Введите Imei :");
                     String imei = scanner.nextLine();
                     device = new Smartphone(brand, model, serial, problem, imei, "os");
-                    repairService.addDeviceInRepair(device);
                     break;
                 }
                 case 3: {
@@ -169,13 +186,12 @@ public class RepairServiceApp {
                             4084,
                             "os"
                     );
-                    repairService.addDeviceInRepair(device);
                     break;
                 }
                 default:
                     throw new IllegalArgumentException("Неверный тип устройства");
-
             }
+            client.setDevices(device);
             if (repairService == null) {
                 throw new IllegalStateException("RepairService не инициализирован");
             }
@@ -195,7 +211,6 @@ public class RepairServiceApp {
             System.out.println("Клиент не найден");
             return;
         }
-
         System.out.print("Введите новое имя клиента:");
         String newName = scanner.nextLine();
         repairService.editClientName(name, newName);
@@ -216,7 +231,6 @@ public class RepairServiceApp {
             System.out.println("Клиент не найден");
             return;
         }
-
     }
 
     private static void аddClient(Scanner scanner, RepairService repairService) {
