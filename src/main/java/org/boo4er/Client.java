@@ -24,7 +24,11 @@ public class Client {
     }
 
     public void setName(String name) {
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("Имя клиента не может быть пустым");
+        }
         this.name = name;
+
     }
 
     public String getPhone() {
@@ -32,6 +36,9 @@ public class Client {
     }
 
     public void setPhone(String phone) {
+        if (phone == null || !phone.matches("^\\+?[0-9\\-\\s]+$")) {
+            throw new IllegalArgumentException("Неверный формат телефона");
+        }
         this.phone = phone;
     }
 
